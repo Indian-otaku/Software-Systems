@@ -69,8 +69,13 @@ void main() {
 		printf("%06s\n", objcode);
 		count = 0;
 		for (int i = 0; i < txtp; i++) {
-			for (int j = 0; j < strlen(txtrec[i]); j++) {
-				count++;
+			if (strlen(txtrec[i]) > 6 || strcmp(mnemonic, "BYTE") == 0) {
+				for (int j = 0; j < strlen(txtrec[i]); j++) {
+					count++;
+				}
+			}
+			else {
+				count += 6;
 			}
 		}
 		if ( count + strlen(objcode) +1 > 60) {
