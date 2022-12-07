@@ -3,10 +3,10 @@
 #include <stdlib.h>
 
 void main() {
-	int ctr1 = 0, ctr2 = 0, source_int, txtp=0, count=0;
+	int ctr1 = 0, ctr2 = 0, source_int, txtp = 0, count = 0;
 	FILE* intmedf, * psizef, * symtabf, * optabf, * outputf;
-	char locctr[10], label[10], mnemonic[10], operand[30], name[6]="      ", psize[5], objcode[100], 
-		opcode[10],mno[10], lctrt[10], symbolst[10], opaddr[10]="0000", target_string[3], sa[10], sao[10];
+	char locctr[10], label[10], mnemonic[10], operand[30], name[6] = "      ", psize[5], objcode[100], c,
+		opcode[10], mno[10], lctrt[10], symbolst[10], opaddr[10] = "0000", target_string[3], sa[10], sao[10];
 	char txtrec[30][60];
 	intmedf = fopen("intmed.txt", "r");
 	outputf = fopen("output.txt", "a");
@@ -20,7 +20,7 @@ void main() {
 	}
 	fscanf(psizef, "%s", psize);
 	fclose(psizef);
-	fprintf(outputf,"H^%6s^%06s^%06s\n", name, sao, psize);
+	fprintf(outputf, "H^%6s^%06s^%06s\n", name, sao, psize);
 	fscanf(intmedf, "%s %s %s %s", locctr, label, mnemonic, operand);
 	while (strcmp("END", mnemonic) != 0) {
 		ctr1 = 0; ctr2 = 0;
@@ -54,11 +54,20 @@ void main() {
 		}
 		else if (strcmp(mnemonic, "BYTE") == 0) {
 			strcpy(objcode, "");
-			for (int i = 2; i < strlen(operand); i++) {
-				source_int = operand[i];
-				sprintf(target_string, "%x", source_int);
-				strcat(objcode, target_string);
+			if (operand[0] == 'C') {
+				for (int i = 2; i < strlen(operand); i++) {
+					source_int = operand[i];
+					sprintf(target_string, "%x", source_int);
+					strcat(objcode, target_string);
+				}
 			}
+			else if (operand[0] == 'X') {
+				for (int i = 2; i < strlen(operand); i++) {
+					c = operand[i];
+					strncat(objcode, &c, 1);
+				}
+			}
+
 		}
 		else if (strcmp(mnemonic, "WORD") == 0) {
 			sprintf(name, "%x", strtol(operand, NULL, 10));
@@ -69,7 +78,7 @@ void main() {
 		}
 		count = 0;
 		for (int i = 0; i < txtp; i++) {
-			if (strlen(txtrec[i]) > 6 || strcmp(mnemonic, "BYTE") == 0) {
+			if (strcmp(mnemonic, "BYTE") == 0) {
 				for (int j = 0; j < strlen(txtrec[i]); j++) {
 					count++;
 				}
@@ -95,12 +104,12 @@ void main() {
 		}
 		fscanf(intmedf, "%s %s %s %s", locctr, label, mnemonic, operand);
 	}
-	fprintf(outputf, "T^%06s^%02x", sao, count/2);
+	fprintf(outputf, "T^%06s^%02x", sao, count / 2);
 	for (int i = 0; i < txtp; i++) {
 		fprintf(outputf, "^%06s", txtrec[i]);
 	}
 	fprintf(outputf, "\n");
-	fprintf(outputf, "E^%06s\n",sa );
+	fprintf(outputf, "E^%06s\n", sa);
 	fclose(outputf);
 	printf("Pass 2 complete\nCheck output.txt file\n");
 }
