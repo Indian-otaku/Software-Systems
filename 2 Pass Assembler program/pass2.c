@@ -61,7 +61,8 @@ void main() {
 			}
 		}
 		else if (strcmp(mnemonic, "WORD") == 0) {
-			strcpy(objcode, operand);
+			sprintf(name, "%x", strtol(operand, NULL, 10));
+			strcpy(objcode, name);
 		}
 		else {
 			strcpy(objcode, "");
