@@ -7,7 +7,7 @@ void main(){
 	char label[10], mnemonic[10], operand[30], symbolst[10], mnemonict[10], opcode[3];
 	FILE* intmedf, * optabf, * symtabf, * inputf, * psizef;
 	inputf = fopen("input.txt", "r");
-	intmedf = fopen("intmed.txt", "a");
+	intmedf = fopen("intmed.txt", "w");
 	fscanf(inputf, "%s %s %s", label, mnemonic, operand);
 	if (strcmp(mnemonic, "START") == 0) {
 		sa = strtol(operand, NULL, 16);
