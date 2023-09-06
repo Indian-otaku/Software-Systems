@@ -1,0 +1,10 @@
+printf
+void
+main
+int
+for
+if
+else
+while
+break
+#include
