@@ -1,4 +1,2 @@
 # Software-Systems
-Software system related programs
-
-Finished all experiments
+Software system and compiler design related programs. 
