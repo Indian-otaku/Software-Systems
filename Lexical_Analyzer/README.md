@@ -1,5 +1,7 @@
 # Lexical analyzer program with C
 
+#### A lot more robust lexial analyzer program that solves many edge cases than just some college program lol. 
+
 Input program:
 ![WhatsApp Image 2023-09-06 at 11 51 59](https://github.com/Indian-otaku/Software-Systems/assets/84381682/66185506-e262-4f6e-9558-963467e43e3f)
 
